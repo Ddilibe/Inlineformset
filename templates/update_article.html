@@ -1,0 +1,9 @@
+<form method='post' enctype="multipart/form-data" novalidate="">
+		{% csrf_token %}
+{{ form.as_p }}
+{{ add_image_meta_formset.as_p }}
+
+<div class="mt-3 mb-5">
+			<button type="submit" class="px-5 btn btn-info">Update</button>
+		</div>
+</form>

@@ -1,0 +1,10 @@
+{{ object_name }} written by {{ object_nam }}
+{% for img in image %}
+	{% for bod in body %}
+		{% for vid in video %}
+			{{ vid.as_p }}
+			{{ bod.as_p }}
+			<img src="{{img.image.url}}" alt="Smiley face" width="250" height="250">
+		{% endfor %}
+	{% endfor %}
+{% endfor %}

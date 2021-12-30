@@ -1,0 +1,35 @@
+<html style="background-color: blueviolet;">
+	<head>
+	</head>
+	<body>
+		<div class="sex" style="background-color: black;color: white;">
+		USING NOTEPAD++ IS REALLY TASKING AND TIRING. Hero Mode The movie is very good and i kinda love the game. it is really nice that the people came together as a family. i have to say that it is nice
+		</div>
+		
+		<ul>
+			{% for man in object_list %}
+			<a href="{% url 'ArticleDetailView' man.pk %}">
+				<li> {{ man.title }}</li>
+				<li> {{ man.image }}</li>
+			</a>
+			{% endfor %}
+		</ul>
+	</body>
+	<style type="text/css">
+		.sex {
+
+			height: auto;
+			width: auto;
+			border-radius: 21px;
+			display: flex;
+			justify-content: center;
+			justify-items: baseline;
+			justify-self: baseline;
+			padding-top: 20px;
+			padding: 20px;
+				padding-top: 20px;
+			padding-top: 20px;
+
+		}
+	</style>
+</html>

@@ -1,0 +1,152 @@
+<style>
+	.hidden {
+		display:inone;
+	}
+</style>
+<div class="container mt-4">
+	<div class="buttons">
+		<button id="add_image" type="button">Add Image</button>
+		<button id="add_body" type="button">Add Paragraph</button>
+		<button id="add_video" type="button">Add Video</button>
+	</div>
+	<form method="post" enctype="multipart/form-data" novalidate="">
+		{% csrf_token %}
+		{{ add_image_meta_formset.non_form_errors }}
+		{{ add_image_meta_formset.management_form }}
+		{{ add_body_meta_formset.non_form_errors }}
+		{{ add_body_meta_formset.management_form }}
+		{{ add_video_meta_formset.non_form_errors }}
+		{{ add_video_meta_formset.management_form }}
+		<div class="card">
+			<div class="card-header">
+				<h4>Create Article</h4>
+			</div>
+			<div id="dynamic-form">
+				<div class="card-body" id="card-body">
+					{{ form.non_form_error }}
+					{{ form.as_p }}
+					<h3 class="text-info"> Add other things </h3>
+					<div>
+						
+							{% for img in add_image_meta_formset %}
+						<div id="empty-image-form" class="hidden">
+							<div class="d-flex py-1 inline {{ add_image_meta_formset.prefix }}">
+								<div class="ml-4"> {{ img.as_p }} </div>
+								{% if img.can_delete %}
+									<div class="ml-4">{{ img.delete }} </div>
+								{% endif %}
+							</div>
+						</div>
+							{% endfor %}
+					</div>
+					<div>
+						{% for bod in add_body_meta_formset %}
+						<div id="empty-body-form" class="hidden">
+							<div class="d-flex py-1 inline {{ add_body_meta_formset.prefix }}">
+								<div class="ml-4"> {{ bod.as_p }} </div>
+								{% if bod.can_delete %}
+									<div class="ml-4">{{ bod.delete }} </div>
+								{% endif %}
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+					<div>
+						{% for vid in add_video_meta_formset %}
+						<div class="hidden" id="empty-video-form">
+							<div class="d-flex py-1 inline {{ add_video_meta_formset.prefix }}">
+								<div class="ml-4"> {{ vid.as_p }} </div>
+								{% if vid.can_delete %}
+									<div class="ml-4">{{ vid.delete }} </div>
+								{% endif %}
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="mt-3 mb-5">
+			<button type="submit" class="px-5 btn btn-info">Save</button>
+		</div>
+	</form>
+</div>
+
+<script>
+
+	const addimage = document.getElementById('add_image')
+	const totalNewImageForms = document.getElementById("id_add_image_set-TOTAL_FORMS")
+	
+	addimage.addEventListener('click', add_new_image)
+	function add_new_image(event) {
+		if (event) {
+			event.preventDefault()
+		}
+		const currentimageDynamicForms = document.getElementsByClassName('card-body')
+		const currentimageFormCount = currentimageDynamicForms.length // + 1
+		const formCopyTarget = document.getElementById('card-body')
+		const copyEmptyFormEl = document.getElementById('empty-image-form').cloneNode(true)
+		copyEmptyFormEl.setAttribute('class', 'card-body')
+		copyEmptyFormEl.setAttribute('id', `form-${currentimageFormCount}`)
+		const regex = new RegExp('0', 'g')
+		
+		copyEmptyFormEl.innerHTML = copyEmptyFormEl.innerHTML.replace(regex, currentimageFormCount)
+		totalNewImageForms.setAttribute('value', currentimageFormCount + 1)
+		// Add a new empty form element in our html form
+		formCopyTarget.append(copyEmptyFormEl)
+	}
+	
+	const addbody = document.getElementById('add_body')
+	const totalNewBodyForms = document.getElementById('id_add_body_set-TOTAL_FORMS')
+	
+	addbody.addEventListener('click', add_new_body)
+	function add_new_body(event) {
+		if (event) {
+			event.preventDefault()
+		}
+		const currentbodyDynamicForms = document.getElementsByClassName('card-body')
+		const currentbodyFormCount = currentbodyDynamicForms.length
+		const formCopyTarget = document.getElementById('card-body')
+		const copyEmptyFormEl = document.getElementById('empty-body-form').cloneNode(true)
+		copyEmptyFormEl.setAttribute('class', 'card-body')
+		copyEmptyFormEl.setAttribute('id', `form-${currentbodyFormCount}`)
+		const regex = new RegExp('0','g')
+		copyEmptyFormEl.innerHTML = copyEmptyFormEl.innerHTML.replace(regex, currentbodyFormCount)
+		totalNewBodyForms.setAttribute('value', currentbodyFormCount + 1)
+		// Add a new empty form element  in our html form
+		formCopyTarget.append(copyEmptyFormEl)
+	}
+	
+	const addvideo = document.getElementById("add_video")
+	const totalNewVideoForms = document.getElementById("id_add_video_set-TOTAL_FORMS")
+	
+	addvideo.addEventListener('click', add_new_video)
+		function add_new_video(event) {
+			if (event) {
+				event.preventDefault()
+			}
+			const currentvideoDynamicForms = document.getElementById('card-body')
+			const currentvideoFormCount = currentvideoDynamicForms.length
+			const formCopyTarget = document.getElementById('card-body')
+			const copyEmptyFormEl= document.getElementById('empty-video-form').cloneNode(true)
+			copyEmptyFormEl.setAttribute('class', 'card-body')
+			copyEmptyFormEl.setAttribute('id', `form-$(currentbodyFormCount)`)
+			const regex = new RegExp('0', 'g')
+			copyEmptyFormEl.innerHTML = copyEmptyFormEl.innerHTML.replace(regex, currentvideoFormCount)
+			totalNewVideoForms.setAttribute('value', currentvideoFormCount + 1)
+			// Add a new empty form element in our html form
+			formCopyTarget.append(copyEmptyFormEl)
+		}
+	
+</script>
+
+
+
+
+
+
+
+
+
+
+
